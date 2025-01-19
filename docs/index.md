@@ -1,5 +1,7 @@
 # StarkHive Documentation
 
+- [Pitch Deck](StarkhivePitchDeck.pdf) - StarkHive pitch deck
+
 ## Core Documentation
 - [Overview](overview.md) - Project overview and introduction
 - [Whitepaper](whitepaper.md) - Comprehensive technical whitepaper
@@ -12,9 +14,9 @@
 - [Technical Specifications](specs.md) - Technical architecture and specifications
 - [Development Plan](plan.md) - Development roadmap and phases
 
-## Service Documentation
+## Services Documentation
 - [Services](services.md) - Available services and packages
-- [Resources](resources.md) - Development and learning resources
+
 
 ## Quick Links
 
