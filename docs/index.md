@@ -34,7 +34,6 @@
 ### Technical Resources
 - [Integration Guidelines](plugin-starkhive.md#integration-guidelines)
 - [Development Tools](aiws.md#development-tools)
-- [Best Practices](resources.md#best-practices)
 - [API Documentation](plugin-starkhive.md#api-integration)
 
 ### Business Information

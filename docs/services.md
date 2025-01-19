@@ -151,8 +151,6 @@ For business analysis and projections, see our [business plan](business-plan.md)
 - Best practices
 - Security guidance
 
-For development resources and tools, see our [resources documentation](resources.md).
-
 ## Integration Services
 
 ### API Integration

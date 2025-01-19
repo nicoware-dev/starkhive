@@ -2,7 +2,7 @@
   "name": "🎓 Starknet Expert Agent",
   "plugins": [],
   "clients": [],
-  "modelProvider": "openai",
+  "modelProvider": "anthropic",
   "settings": {
     "secrets": {
     },

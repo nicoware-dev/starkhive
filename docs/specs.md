@@ -36,7 +36,6 @@ For implementation details and integration guides, see our [plugin documentation
 
 ## Development Guidelines
 
-For development resources and best practices, see our [resources documentation](resources.md).
 
 ### Code Standards
 - TypeScript strict mode

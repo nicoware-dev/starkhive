@@ -225,8 +225,6 @@ For integration details, see our [AI Workforce Suite documentation](aiws.md).
 - Enterprise features
 - Mobile support
 
-For development resources and tools, see our [resources documentation](resources.md).
-
 ## Security Considerations
 
 ### System Security

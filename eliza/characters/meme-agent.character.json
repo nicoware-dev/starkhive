@@ -2,7 +2,7 @@
   "name": "🧙 Meme Agent",
   "plugins": [],
   "clients": ["twitter"],
-  "modelProvider": "openai",
+  "modelProvider": "anthropic",
   "settings": {
     "secrets": {},
     "voice": {

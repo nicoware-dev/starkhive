@@ -159,7 +159,7 @@ For complete details about each agent's capabilities and use cases, see our [age
 
 StarkHive is and will always be open source! We strongly encourage users to self-host their own instance of StarkHive. This gives you full control over your data and agents while learning about the technology.
 
-For detailed implementation guidance, see our [plugin documentation](docs/plugin-starkhive.md) and [development resources](docs/resources.md).
+For detailed implementation guidance, see our [plugin documentation](docs/plugin-starkhive.md).
 
 ### Requirements for Self-Hosting
 - Server or cloud instance (e.g., AWS, DigitalOcean, or your local machine)
@@ -272,7 +272,10 @@ pnpm build
 # Start a single agent (Recommended for testing)
 pnpm start --characters="characters/coordinator.character.json"
 
-# Start all agents
+# Start demo agents (4)
+pnpm start --characters="characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/starknet-expert-agent.character.json"
+
+# Start all agents (18)
 pnpm start --characters="characters/coordinator.character.json,characters/metrics-agent.character.json,characters/sales-agent.character.json,characters/meme-agent.character.json,characters/nfts-agent.character.json,characters/alpha-agent.character.json,characters/analyst-agent.character.json,characters/trading-agent.character.json,characters/wallet-agent.character.json,characters/dao-agent.character.json,characters/defi-agent.character.json,characters/vc-agent.character.json,characters/kol-agent.character.json,characters/token-deployer-agent.character.json,characters/nft-deployer-agent.character.json,characters/starknet-expert-agent.character.json,characters/predictions-agent.character.json,characters/advisor-agent.character.json"
 ```
 

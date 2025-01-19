@@ -115,8 +115,6 @@ For development timeline and roadmap, see our [development plan](plan.md).
 - Privacy protection
 - Compliance
 
-For development resources and tools, see our [resources documentation](resources.md).
-
 ## Use Cases
 
 ### DeFi Operations

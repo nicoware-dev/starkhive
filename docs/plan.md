@@ -113,7 +113,6 @@ For business analysis and projections, see our [business plan](business-plan.md)
 ## Technical Implementation
 
 ### Infrastructure
-For development resources and tools, see our [resources documentation](resources.md).
 
 - Cloud deployment
 - Scalable architecture

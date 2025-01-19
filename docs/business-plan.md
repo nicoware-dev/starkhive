@@ -130,8 +130,6 @@ Note: All projections are examples for illustration purposes only.
 - Example monthly costs: 50,000 USDC
 - Example revenue targets: 75,000 USDC/month
 
-For development resources and tools, see our [resources documentation](resources.md).
-
 ## Risk Analysis
 
 ### Technical Risks
