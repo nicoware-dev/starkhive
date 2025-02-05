@@ -85,7 +85,7 @@ function Home() {
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                     <Button
                                         size="lg"
-                                        onClick={() => navigate('/app/chat/default')}
+                                        onClick={() => handleExternalLink('https://t.me/StarkHiveSalesAgent_bot')}
                                         style={{ backgroundColor: '#7f00ff', color: 'white' }}
                                         className="hover:bg-[#7f00ff]/90 flex items-center gap-2 w-full sm:w-auto"
                                     >
