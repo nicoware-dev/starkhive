@@ -32,13 +32,12 @@ export function EventsSidebar() {
         queryKey: ["events"],
         queryFn: async () => {
             try {
-                const res = await fetch("http://localhost:3000/events", {
+                const res = await fetch("/api/events", {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
-                    },
-                    mode: 'cors'
+                    }
                 });
 
                 if (!res.ok) {

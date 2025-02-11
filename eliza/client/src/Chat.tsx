@@ -28,8 +28,11 @@ export default function Chat() {
         queryKey: ["agent", agentId],
         queryFn: async () => {
             const res = await fetch(`/api/agents/${agentId}`);
+            if (!res.ok) {
+                throw new Error('Failed to fetch agent');
+            }
             const data = await res.json();
-            return { id: data.id, name: data.character.name };
+            return data;
         },
         enabled: !!agentId,
     });
@@ -49,7 +52,7 @@ export default function Chat() {
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const res = await fetch(`/api/${agentId}/message`, {
+            const res = await fetch(`/api/agents/${agentId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -60,6 +63,9 @@ export default function Chat() {
                     roomId: `default-room-${agentId}`,
                 }),
             });
+            if (!res.ok) {
+                throw new Error('Failed to send message');
+            }
             return res.json() as Promise<TextResponse[]>;
         },
         onSuccess: (data) => {
