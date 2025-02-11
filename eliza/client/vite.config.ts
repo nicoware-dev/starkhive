@@ -15,6 +15,15 @@ export default defineConfig({
             target: 'es2020'
         }
     },
+    server: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+                secure: false,
+            }
+        }
+    },
     build: {
         commonjsOptions: {
             exclude: ["onnxruntime-node", "@anush008/tokenizers"],
@@ -37,16 +46,6 @@ export default defineConfig({
             "@": resolve(__dirname, "./src"),
             "d3-shape": 'd3-shape'
         }
-    },
-    server: {
-        proxy: {
-            "/api": {
-                target: process.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app",
-                changeOrigin: true,
-                secure: false,
-                rewrite: (path) => path,
-            },
-        },
     },
     define: {
         'process.env': {

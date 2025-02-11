@@ -5,13 +5,22 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { API_ENDPOINTS } from "./config";
+import { API_ENDPOINTS } from "@/config";
 import "./App.css";
 
 type TextResponse = {
     text: string;
     user: string;
 };
+
+interface Character {
+    name: string;
+}
+
+interface AgentResponse {
+    id: string;
+    character: Character;
+}
 
 interface Agent {
     id: string;
@@ -25,27 +34,32 @@ export default function Chat() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Fetch agent details
-    const { data: agent } = useQuery<Agent>({
+    const { data: agent, isLoading, error } = useQuery<Agent>({
         queryKey: ["agent", agentId],
         queryFn: async () => {
-            const res = await fetch(API_ENDPOINTS.agentDetails(agentId!), {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!res.ok) {
-                throw new Error('Failed to fetch agent');
+            try {
+                const res = await fetch(API_ENDPOINTS.agentDetails(agentId!));
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch agent: ${res.status}`);
+                }
+                const data: AgentResponse = await res.json();
+                return {
+                    id: data.id,
+                    name: data.character.name
+                };
+            } catch (err) {
+                console.error('Error fetching agent:', err);
+                throw err;
             }
-            const data = await res.json();
-            return data;
         },
         enabled: !!agentId,
+        retry: 1,
     });
 
     // Clear messages when agent changes
     useEffect(() => {
         setMessages([]);
-    }, []);
+    }, [agentId]);
 
     const scrollToBottom = useCallback(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,24 +71,33 @@ export default function Chat() {
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const res = await fetch(API_ENDPOINTS.messages(agentId!), {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text,
-                    userId: "user",
-                    roomId: `default-room-${agentId}`,
-                }),
-            });
-            if (!res.ok) {
-                throw new Error('Failed to send message');
+            try {
+                const res = await fetch(API_ENDPOINTS.messages(agentId!), {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        text,
+                        userId: "user",
+                        roomId: `default-room-${agentId}`,
+                    }),
+                });
+                if (!res.ok) {
+                    throw new Error(`Failed to send message: ${res.status}`);
+                }
+                return res.json() as Promise<TextResponse[]>;
+            } catch (err) {
+                console.error('Error sending message:', err);
+                throw err;
             }
-            return res.json() as Promise<TextResponse[]>;
         },
         onSuccess: (data) => {
             setMessages((prev) => [...prev, ...data]);
+            scrollToBottom();
+        },
+        onError: (error) => {
+            console.error('Mutation error:', error);
         },
     });
 
@@ -98,7 +121,7 @@ export default function Chat() {
             <div className="flex-none border-b border-[#27272A] bg-[#121212]/95 backdrop-blur supports-[backdrop-filter]:bg-[#121212]/60">
                 <div className="flex items-center justify-center h-12">
                     <span className="font-medium">
-                        {agent?.name || 'Loading...'}
+                        {isLoading ? 'Loading...' : agent?.name || 'No agent selected'}
                     </span>
                 </div>
             </div>
@@ -142,7 +165,7 @@ export default function Chat() {
                                                         ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2" {...props} />,
                                                         ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2" {...props} />,
                                                         li: ({node, ...props}) => <li className="mb-1" {...props} />,
-                                                        code: ({node, inline, ...props}) =>
+                                                        code: ({node, inline, ...props}: {node: any, inline?: boolean, [key: string]: any}) =>
                                                             inline ? (
                                                                 <code className="bg-black/30 rounded px-1 py-0.5" {...props} />
                                                             ) : (
@@ -171,7 +194,11 @@ export default function Chat() {
                 ) : (
                     <div className="h-full flex items-center justify-center p-4">
                         <div className="text-muted-foreground text-center">
-                            No messages yet. Start a conversation with {agent?.name || 'the agent'}!
+                            {agent ? (
+                                `No messages yet. Start a conversation with ${agent.name}!`
+                            ) : (
+                                "Please select an agent to start chatting"
+                            )}
                         </div>
                     </div>
                 )}
@@ -184,13 +211,13 @@ export default function Chat() {
                         <Input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder={`Message ${agent?.name || 'agent'}...`}
+                            placeholder={isLoading ? "Loading..." : agent ? `Message ${agent.name}...` : "Select an agent..."}
                             className="flex-1 bg-[#1a1a1a] border-[#27272A] focus:border-[#7f00ff] focus:ring-[#7f00ff]"
-                            disabled={mutation.isPending}
+                            disabled={isLoading || mutation.isPending || !agent}
                         />
                         <Button
                             type="submit"
-                            disabled={mutation.isPending}
+                            disabled={isLoading || mutation.isPending || !agent}
                             className="bg-[#7f00ff] text-white hover:bg-[#7f00ff]/90"
                         >
                             {mutation.isPending ? "..." : "Send"}
