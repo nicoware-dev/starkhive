@@ -41,7 +41,7 @@ export default defineConfig({
     server: {
         proxy: {
             "/api": {
-                target: "https://7b71-45-238-221-26.ngrok-free.app",
+                target: process.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app",
                 changeOrigin: true,
                 secure: false,
                 rewrite: (path) => path,
