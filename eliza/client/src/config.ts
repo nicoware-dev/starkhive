@@ -20,8 +20,8 @@ export const API_BASE_URL = getBaseUrl();
 
 // API Endpoints
 export const API_ENDPOINTS = {
-    agents: `${API_BASE_URL}/api/agents`,  // Added /api prefix
-    events: `${API_BASE_URL}/api/events`,  // Added /api prefix
-    messages: (agentId: string) => `${API_BASE_URL}/api/${agentId}/message`,  // Added /api prefix
-    agentDetails: (agentId: string) => `${API_BASE_URL}/api/agents/${agentId}`,  // Added /api prefix
+    agents: `${API_BASE_URL}/agents`,
+    events: `${API_BASE_URL}/events`,
+    messages: (agentId: string) => `${API_BASE_URL}/agents/${agentId}/message`,
+    agentDetails: (agentId: string) => `${API_BASE_URL}/agents/${agentId}`
 }; 
