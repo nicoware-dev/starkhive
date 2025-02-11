@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { API_ENDPOINTS } from "./config";
 import "./App.css";
 
 type TextResponse = {
@@ -27,8 +28,7 @@ export default function Chat() {
     const { data: agent } = useQuery<Agent>({
         queryKey: ["agent", agentId],
         queryFn: async () => {
-            const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
-            const res = await fetch(`${baseUrl}/agents/${agentId}`);
+            const res = await fetch(API_ENDPOINTS.agentDetails(agentId!));
             if (!res.ok) {
                 throw new Error('Failed to fetch agent');
             }
@@ -53,8 +53,7 @@ export default function Chat() {
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
-            const res = await fetch(`${baseUrl}/agents/${agentId}/message`, {
+            const res = await fetch(API_ENDPOINTS.messages(agentId!), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

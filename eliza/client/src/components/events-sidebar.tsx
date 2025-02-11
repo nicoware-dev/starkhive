@@ -1,5 +1,6 @@
 import { ScrollText, Loader2, AlertCircle, Brain, Lightbulb, Zap } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { API_ENDPOINTS } from "@/config";
 import {
     Tooltip,
     TooltipContent,
@@ -32,8 +33,7 @@ export function EventsSidebar() {
         queryKey: ["events"],
         queryFn: async () => {
             try {
-                const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
-                const res = await fetch(`${baseUrl}/events`, {
+                const res = await fetch(API_ENDPOINTS.events, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',

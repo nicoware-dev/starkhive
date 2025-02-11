@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "./ui/button";
+import { API_ENDPOINTS } from "@/config";
 
 interface Agent {
     id: string;
@@ -22,7 +23,10 @@ export function AgentsSidebar({ onClose }: AgentsSidebarProps) {
     const { data: agents, isLoading, error } = useQuery<Agent[]>({
         queryKey: ["agents"],
         queryFn: async () => {
-            const res = await fetch("/api/agents");
+            const res = await fetch(API_ENDPOINTS.agents);
+            if (!res.ok) {
+                throw new Error('Failed to fetch agents');
+            }
             const data = await res.json();
             return data.agents;
         },
