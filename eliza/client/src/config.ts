@@ -22,6 +22,6 @@ export const API_BASE_URL = getBaseUrl();
 export const API_ENDPOINTS = {
     agents: `${API_BASE_URL}/agents`,
     events: `${API_BASE_URL}/events`,
-    messages: (agentId: string) => `${API_BASE_URL}/agents/${agentId}/message`,
+    messages: (agentId: string) => `${API_BASE_URL}/${agentId}/message`,
     agentDetails: (agentId: string) => `${API_BASE_URL}/agents/${agentId}`
 }; 
