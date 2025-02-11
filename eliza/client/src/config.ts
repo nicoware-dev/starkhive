@@ -2,7 +2,7 @@
 const getBaseUrl = () => {
     // For local development
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        return 'http://localhost:3000';  // Direct URL to backend
+        return 'http://localhost:3000';
     }
     
     // For Vercel deployment
@@ -12,8 +12,8 @@ const getBaseUrl = () => {
         return url.endsWith('/') ? url.slice(0, -1) : url;
     }
     
-    // Fallback to ngrok URL
-    return 'https://7b71-45-238-221-26.ngrok-free.app';
+    // Fallback to local development
+    return 'http://localhost:3000';
 };
 
 export const API_BASE_URL = getBaseUrl();
