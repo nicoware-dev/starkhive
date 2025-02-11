@@ -6,8 +6,8 @@ const getBaseUrl = () => {
     }
     
     // For Vercel deployment
-    if (process.env.VITE_BACKEND_URL) {
-        return process.env.VITE_BACKEND_URL;
+    if (import.meta.env.VITE_BACKEND_URL) {
+        return import.meta.env.VITE_BACKEND_URL;
     }
     
     // Fallback to ngrok URL
