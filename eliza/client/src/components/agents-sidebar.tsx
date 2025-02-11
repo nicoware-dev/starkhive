@@ -23,17 +23,39 @@ export function AgentsSidebar({ onClose }: AgentsSidebarProps) {
     const { data: agents, isLoading, error } = useQuery<Agent[]>({
         queryKey: ["agents"],
         queryFn: async () => {
-            const res = await fetch(API_ENDPOINTS.agents, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!res.ok) {
-                throw new Error('Failed to fetch agents');
+            try {
+                console.log('Fetching agents from:', API_ENDPOINTS.agents);
+                const res = await fetch(API_ENDPOINTS.agents, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    mode: 'cors',
+                });
+                
+                if (!res.ok) {
+                    const text = await res.text();
+                    console.error('Error response:', text);
+                    throw new Error(`Failed to fetch agents: ${res.status} ${res.statusText}`);
+                }
+                
+                const text = await res.text();
+                console.log('Response text:', text);
+                
+                try {
+                    const data = JSON.parse(text);
+                    return data.agents;
+                } catch (e) {
+                    console.error('JSON parse error:', e);
+                    throw new Error('Invalid JSON response from server');
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                throw err;
             }
-            const data = await res.json();
-            return data.agents;
         },
+        retry: 1
     });
 
     // Only navigate to first agent if we're on a chat page and no agent is selected

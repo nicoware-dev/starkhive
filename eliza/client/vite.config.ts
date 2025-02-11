@@ -17,12 +17,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '/agents': {
-                target: 'http://localhost:3000',
-                changeOrigin: true,
-                secure: false,
-            },
-            '/events': {
+            '/api': {
                 target: 'http://localhost:3000',
                 changeOrigin: true,
                 secure: false,
