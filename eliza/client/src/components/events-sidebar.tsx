@@ -32,7 +32,8 @@ export function EventsSidebar() {
         queryKey: ["events"],
         queryFn: async () => {
             try {
-                const res = await fetch("/api/events", {
+                const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
+                const res = await fetch(`${baseUrl}/events`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',

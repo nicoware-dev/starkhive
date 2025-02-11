@@ -27,7 +27,8 @@ export default function Chat() {
     const { data: agent } = useQuery<Agent>({
         queryKey: ["agent", agentId],
         queryFn: async () => {
-            const res = await fetch(`/api/agents/${agentId}`);
+            const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
+            const res = await fetch(`${baseUrl}/agents/${agentId}`);
             if (!res.ok) {
                 throw new Error('Failed to fetch agent');
             }
@@ -52,7 +53,8 @@ export default function Chat() {
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const res = await fetch(`/api/agents/${agentId}/message`, {
+            const baseUrl = import.meta.env.VITE_API_URL || "https://7b71-45-238-221-26.ngrok-free.app";
+            const res = await fetch(`${baseUrl}/agents/${agentId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
