@@ -32,27 +32,16 @@ export function EventsSidebar() {
     const { data: events, isLoading, error } = useQuery<Event[]>({
         queryKey: ["events"],
         queryFn: async () => {
-            try {
-                const res = await fetch(API_ENDPOINTS.events, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    console.error('Server response:', errorText);
-                    throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
-                }
-                const data = await res.json();
-                console.log('Events API response:', data);
-                return data.events || [];
-            } catch (error) {
-                console.error('Error fetching events:', error);
-                throw error;
+            const res = await fetch(API_ENDPOINTS.events, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!res.ok) {
+                throw new Error('Failed to fetch events');
             }
+            const data = await res.json();
+            return data.events;
         },
         refetchInterval: 5000,
         retry: 3,

@@ -28,7 +28,11 @@ export default function Chat() {
     const { data: agent } = useQuery<Agent>({
         queryKey: ["agent", agentId],
         queryFn: async () => {
-            const res = await fetch(API_ENDPOINTS.agentDetails(agentId!));
+            const res = await fetch(API_ENDPOINTS.agentDetails(agentId!), {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             if (!res.ok) {
                 throw new Error('Failed to fetch agent');
             }
@@ -56,7 +60,7 @@ export default function Chat() {
             const res = await fetch(API_ENDPOINTS.messages(agentId!), {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     text,

@@ -23,7 +23,11 @@ export function AgentsSidebar({ onClose }: AgentsSidebarProps) {
     const { data: agents, isLoading, error } = useQuery<Agent[]>({
         queryKey: ["agents"],
         queryFn: async () => {
-            const res = await fetch(API_ENDPOINTS.agents);
+            const res = await fetch(API_ENDPOINTS.agents, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             if (!res.ok) {
                 throw new Error('Failed to fetch agents');
             }
